@@ -32,5 +32,13 @@ fi
 
 sprite_dir="$(basename "$name" ".$name_ext")"
 mkdir -p "$sprite_dir" || exit
+cd "$sprite_dir" || exit
 
-magick "../assets/$name" -crop "$size" "$sprite_dir/tile.png"
+magick "../../assets/$name" -crop "$size" "tile.png"
+
+for tile in tile*.png; do
+  tile_no_ext=$(basename $tile .png)
+  chafa --size "$size" "$tile" | tee "${tile_no_ext}.ascii"
+done
+
+rm tile*.png
