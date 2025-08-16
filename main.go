@@ -30,6 +30,7 @@ type lunaModel struct {
 	activeAnimation      string
 	activeAnimationCount int
 	activeFrame          int
+	showHelp             bool
 	err                  error
 }
 
@@ -43,11 +44,12 @@ func newLuna() lunaModel {
 		activeAnimation:      "idle",
 		activeFrame:          0,
 		activeAnimationCount: len(pets["cat"]["idle"]),
+		showHelp:             true,
 	}
 }
 
 func (l lunaModel) Init() tea.Cmd {
-	return animationTick(l.activeAnimationCount)
+	return tea.Batch(tea.HideCursor, animationTick(l.activeAnimationCount))
 }
 
 func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -103,8 +105,12 @@ func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
 			return l, nil
 
+		case "tab":
+			l.showHelp = !l.showHelp
+			return l, nil
+
 		case "ctrl+c", "q":
-			return l, tea.Quit
+			return l, tea.Batch(tea.ShowCursor, tea.Quit)
 		}
 	}
 
@@ -119,12 +125,15 @@ func (l lunaModel) View() string {
 	ascii := l.pets[l.activePet][l.activeAnimation][l.activeFrame]
 
 	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
+	if !l.showHelp {
+		return ascii
+	}
 
 	return ascii + footer
 }
 
 func main() {
-	p := tea.NewProgram(newLuna())
+	p := tea.NewProgram(newLuna(), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
