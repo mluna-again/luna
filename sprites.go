@@ -2,15 +2,9 @@ package main
 
 import _ "embed"
 
-type asciiAnimation struct {
-	idle      []string
-	sleeping  []string
-	attacking []string
-}
+type asciiAnimation map[string][]string
 
-type asciiPets struct {
-	cat asciiAnimation
-}
+type asciiPets map[string]asciiAnimation
 
 //go:embed sprites/cat/idle-0.ascii
 var catIdle0 string
@@ -71,8 +65,8 @@ var catAttacking8 string
 
 func getPets() asciiPets {
 	return asciiPets{
-		cat: asciiAnimation{
-			idle: []string{
+		"cat": asciiAnimation{
+			"idle": []string{
 				catIdle0,
 				catIdle1,
 				catIdle2,
@@ -81,12 +75,12 @@ func getPets() asciiPets {
 				catIdle5,
 				catIdle6,
 			},
-			sleeping: []string{
+			"sleeping": []string{
 				catSleeping0,
 				catSleeping1,
 				catSleeping2,
 			},
-			attacking: []string{
+			"attacking": []string{
 				catAttacking0,
 				catAttacking1,
 				catAttacking2,
