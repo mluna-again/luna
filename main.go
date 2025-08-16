@@ -64,6 +64,27 @@ func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "1":
+			l.activeAnimation = "idle"
+			l.activeFrame = 0
+			l.activePet = "cat"
+			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			return l, nil
+
+		case "2":
+			l.activeAnimation = "idle"
+			l.activeFrame = 0
+			l.activePet = "turtle"
+			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			return l, nil
+
+		case "3":
+			l.activeAnimation = "idle"
+			l.activeFrame = 0
+			l.activePet = "bunny"
+			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			return l, nil
+
 		case "s":
 			l.activeAnimation = "sleeping"
 			l.activeFrame = 0
