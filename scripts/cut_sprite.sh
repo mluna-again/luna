@@ -41,8 +41,9 @@ cd "$sprite_dir" || exit
 magick "../../assets/$file" -crop "$size" "tile.png"
 
 for tile in tile*.png; do
-  filename=$(sed "s|tile|$animation|" <<< "$tile")
-  chafa --size "$size" "$tile" | tee "$filename"
+  noext=$(basename "$tile" .png)
+  filename=$(sed "s|tile|$animation|" <<< "$noext")
+  chafa --size "$size" "$tile" | tee "${filename}.ascii"
 done
 
 rm tile*.png

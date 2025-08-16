@@ -7,27 +7,27 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-type loadSpritesDone struct {
-	err     error
-	sprites []string
-}
-
-func loadSprites() tea.Msg {
-	return loadSpritesDone{}
-}
-
 type lunaModel struct {
 	greetings string
+	pets      asciiPets
+	activePet []string
+	frame     int
+	err       error
 }
 
 func newLuna() lunaModel {
+	pets := getPets()
+
 	return lunaModel{
 		greetings: "hello brotha",
+		pets:      pets,
+		activePet: pets.cat.idle,
+		frame:     0,
 	}
 }
 
 func (l lunaModel) Init() tea.Cmd {
-	return loadSprites
+	return nil
 }
 
 func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -42,7 +42,13 @@ func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (l lunaModel) View() string {
-	return l.greetings
+	if l.err != nil {
+		return fmt.Sprintf("Oh no: %s", l.err.Error())
+	}
+
+	ascii := l.activePet[l.frame]
+
+	return ascii
 }
 
 func main() {
