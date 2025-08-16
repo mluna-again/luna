@@ -7,6 +7,15 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
+type loadSpritesDone struct {
+	err     error
+	sprites []string
+}
+
+func loadSprites() tea.Msg {
+	return loadSpritesDone{}
+}
+
 type lunaModel struct {
 	greetings string
 }
@@ -18,7 +27,7 @@ func newLuna() lunaModel {
 }
 
 func (l lunaModel) Init() tea.Cmd {
-	return nil
+	return loadSprites
 }
 
 func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
