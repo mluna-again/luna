@@ -11,11 +11,15 @@ import (
 
 type animationTickMsg struct{}
 
-func animationTick(frameCount int) tea.Cmd {
-	shortAnimation := frameCount < 5
-	delay := (time.Second * 2) / time.Duration(frameCount)
+func (l lunaModel) animationTick() tea.Cmd {
+	shortAnimation := l.activeAnimationCount < 5
+	delay := (time.Second * 2) / time.Duration(l.activeAnimationCount)
 	if shortAnimation {
-		delay = (time.Second * 3) / time.Duration(frameCount)
+		delay = (time.Second * 3) / time.Duration(l.activeAnimationCount)
+	}
+
+	if l.activePet == "amogus" {
+		delay = time.Millisecond * 40
 	}
 
 	return tea.Tick(delay, func(t time.Time) tea.Msg {
@@ -51,7 +55,7 @@ func newLuna() lunaModel {
 }
 
 func (l lunaModel) Init() tea.Cmd {
-	return tea.Batch(tea.HideCursor, animationTick(l.activeAnimationCount))
+	return tea.Batch(tea.HideCursor, l.animationTick())
 }
 
 func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -69,10 +73,17 @@ func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			l.activeFrame++
 		}
 
-		return l, animationTick(l.activeAnimationCount)
+		return l, l.animationTick()
 
 	case tea.KeyMsg:
 		switch msg.String() {
+		case "0":
+			l.activeAnimation = "idle"
+			l.activeFrame = 0
+			l.activePet = "amogus"
+			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			return l, nil
+
 		case "1":
 			l.activeAnimation = "idle"
 			l.activeFrame = 0

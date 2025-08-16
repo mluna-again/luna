@@ -6,6 +6,24 @@ type asciiAnimation map[string][]string
 
 type asciiPets map[string]asciiAnimation
 
+//go:embed sprites/amogus/amogus0.ascii
+var amogus0 string
+
+//go:embed sprites/amogus/amogus1.ascii
+var amogus1 string
+
+//go:embed sprites/amogus/amogus2.ascii
+var amogus2 string
+
+//go:embed sprites/amogus/amogus3.ascii
+var amogus3 string
+
+//go:embed sprites/amogus/amogus4.ascii
+var amogus4 string
+
+//go:embed sprites/amogus/amogus5.ascii
+var amogus5 string
+
 //go:embed sprites/cat/idle-0.ascii
 var catIdle0 string
 
@@ -206,6 +224,32 @@ var bunnyAttacking6 string
 
 func getPets() asciiPets {
 	return asciiPets{
+		"amogus": asciiAnimation{
+			"idle": []string{
+				amogus0,
+				amogus1,
+				amogus2,
+				amogus3,
+				amogus4,
+				amogus5,
+			},
+			"sleeping": []string{
+				amogus0,
+				amogus1,
+				amogus2,
+				amogus3,
+				amogus4,
+				amogus5,
+			},
+			"attacking": []string{
+				amogus0,
+				amogus1,
+				amogus2,
+				amogus3,
+				amogus4,
+				amogus5,
+			},
+		},
 		"bunny": asciiAnimation{
 			"idle": []string{
 				bunnyIdle0,
