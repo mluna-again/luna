@@ -19,15 +19,18 @@ EOF
 
 [ -z "$name" ] && usage
 
-if [ -d "./assets" ]; then
-  cd assets || exit
+if [ -d "./sprites" ]; then
+  cd sprites || exit
 else
-  cd ../assets || exit
+  cd ../sprites || exit
 fi
 
-if [ ! -r "$name" ]; then
+if [ ! -r "../assets/$name" ]; then
   echo "$name sprite not found"
   exit 1
 fi
 
-magick "$name" -crop "$size" tile.png
+sprite_dir="$(basename "$name" ".$name_ext")"
+mkdir -p "$sprite_dir" || exit
+
+magick "../assets/$name" -crop "$size" "$sprite_dir/tile.png"
