@@ -32,6 +32,8 @@ type lunaModel struct {
 	activeFrame          int
 	showHelp             bool
 	err                  error
+	termH                int
+	termW                int
 }
 
 func newLuna() lunaModel {
@@ -54,6 +56,11 @@ func (l lunaModel) Init() tea.Cmd {
 
 func (l lunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		l.termH = msg.Height
+		l.termW = msg.Width
+		return l, nil
+
 	case animationTickMsg:
 		animation := l.pets[l.activePet][l.activeAnimation]
 		if len(animation) == l.activeFrame+1 {
@@ -123,6 +130,7 @@ func (l lunaModel) View() string {
 	}
 
 	ascii := l.pets[l.activePet][l.activeAnimation][l.activeFrame]
+	ascii = lipgloss.Place(l.termW, l.termH, lipgloss.Center, lipgloss.Center, ascii)
 
 	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
 	if !l.showHelp {
