@@ -44,7 +44,7 @@ func newLuna() lunaModel {
 		activeAnimation:      "idle",
 		activeFrame:          0,
 		activeAnimationCount: len(pets["cat"]["idle"]),
-		showHelp:             true,
+		showHelp:             false,
 	}
 }
 
