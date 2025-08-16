@@ -153,8 +153,83 @@ var turtleAttacking8 string
 //go:embed sprites/turtle/attacking-9.ascii
 var turtleAttacking9 string
 
+//go:embed sprites/bunny/idle-0.ascii
+var bunnyIdle0 string
+
+//go:embed sprites/bunny/idle-1.ascii
+var bunnyIdle1 string
+
+//go:embed sprites/bunny/idle-2.ascii
+var bunnyIdle2 string
+
+//go:embed sprites/bunny/idle-3.ascii
+var bunnyIdle3 string
+
+//go:embed sprites/bunny/idle-4.ascii
+var bunnyIdle4 string
+
+//go:embed sprites/bunny/idle-5.ascii
+var bunnyIdle5 string
+
+//go:embed sprites/bunny/idle-6.ascii
+var bunnyIdle6 string
+
+//go:embed sprites/bunny/idle-7.ascii
+var bunnyIdle7 string
+
+//go:embed sprites/bunny/sleeping-0.ascii
+var bunnySleep0 string
+
+//go:embed sprites/bunny/sleeping-1.ascii
+var bunnySleep1 string
+
+//go:embed sprites/bunny/attacking-0.ascii
+var bunnyAttacking0 string
+
+//go:embed sprites/bunny/attacking-1.ascii
+var bunnyAttacking1 string
+
+//go:embed sprites/bunny/attacking-2.ascii
+var bunnyAttacking2 string
+
+//go:embed sprites/bunny/attacking-3.ascii
+var bunnyAttacking3 string
+
+//go:embed sprites/bunny/attacking-4.ascii
+var bunnyAttacking4 string
+
+//go:embed sprites/bunny/attacking-5.ascii
+var bunnyAttacking5 string
+
+//go:embed sprites/bunny/attacking-6.ascii
+var bunnyAttacking6 string
+
 func getPets() asciiPets {
 	return asciiPets{
+		"bunny": asciiAnimation{
+			"idle": []string{
+				bunnyIdle0,
+				bunnyIdle1,
+				bunnyIdle2,
+				bunnyIdle3,
+				bunnyIdle5,
+				bunnyIdle6,
+				bunnyIdle7,
+			},
+			"sleeping": []string{
+				bunnySleep0,
+				bunnySleep1,
+			},
+			"attacking": []string{
+				bunnyAttacking0,
+				bunnyAttacking1,
+				bunnyAttacking2,
+				bunnyAttacking3,
+				bunnyAttacking4,
+				bunnyAttacking5,
+				bunnyAttacking6,
+			},
+		},
 		"turtle": asciiAnimation{
 			"idle": []string{
 				turtleIdle0,
