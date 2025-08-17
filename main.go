@@ -1,9 +1,14 @@
 package main
 
+// TODO remove all hardcoded and magical values
+
 import (
+	"errors"
 	"fmt"
 	"os"
 	"time"
+
+	"flag"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -40,14 +45,40 @@ type lunaModel struct {
 	termW                int
 }
 
-func newLuna() lunaModel {
+type newLunaParams struct {
+	animation string
+	pet       string
+}
+
+func (p newLunaParams) validate() []error {
+	if p.animation == "" {
+		p.animation = "idle"
+	}
+
+	if p.pet == "" {
+		p.animation = "cat"
+	}
+
+	errs := []error{}
+	if !memberOf([]string{"cat", "turtle", "bunny"}, p.pet) {
+		errs = append(errs, errors.New("invalid pet"))
+	}
+
+	if !memberOf([]string{"idle", "sleeping", "attacking"}, p.animation) {
+		errs = append(errs, errors.New("invalid animation"))
+	}
+
+	return errs
+}
+
+func newLuna(p newLunaParams) lunaModel {
 	pets := getPets()
 
 	return lunaModel{
 		greetings:            "",
 		pets:                 pets,
-		activePet:            "cat",
-		activeAnimation:      "idle",
+		activePet:            p.pet,
+		activeAnimation:      p.animation,
 		activeFrame:          0,
 		activeAnimationCount: len(pets["cat"]["idle"]),
 		showHelp:             false,
@@ -151,8 +182,27 @@ func (l lunaModel) View() string {
 	return ascii + footer
 }
 
+var initialAnimation string
+var initialPet string
+
 func main() {
-	p := tea.NewProgram(newLuna(), tea.WithAltScreen())
+	flag.StringVar(&initialAnimation, "animation", "idle", "initial animation, can be: idle, sleeping, attacking. default: idle")
+	flag.StringVar(&initialPet, "pet", "cat", "initial pet. can be: cat, turtle, bunny. default: cat")
+	flag.Parse()
+
+	params := newLunaParams{
+		animation: initialAnimation,
+		pet:       initialPet,
+	}
+	errs := params.validate()
+	if len(errs) > 0 {
+		for _, e := range errs {
+			fmt.Println(e.Error())
+		}
+		os.Exit(1)
+	}
+
+	p := tea.NewProgram(newLuna(params), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
