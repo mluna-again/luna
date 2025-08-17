@@ -67,6 +67,10 @@ func (p NewLunaParams) Validate() []error {
 		p.Animation = "cat"
 	}
 
+	if p.Size == "" {
+		p.Size = LARGE
+	}
+
 	errs := []error{}
 	if !memberOf([]string{"cat", "turtle", "bunny"}, p.Pet) {
 		errs = append(errs, errors.New("invalid pet"))
@@ -79,8 +83,13 @@ func (p NewLunaParams) Validate() []error {
 	return errs
 }
 
-func NewLuna(p NewLunaParams) LunaModel {
+func NewLuna(p NewLunaParams) (LunaModel, []error) {
 	pets := getPets()
+
+	errs := p.Validate()
+	if len(errs) > 0 {
+		return LunaModel{}, errs
+	}
 
 	return LunaModel{
 		greetings:            "",
@@ -91,7 +100,7 @@ func NewLuna(p NewLunaParams) LunaModel {
 		activeAnimationCount: len(pets["cat"][string(p.Size)]["idle"]),
 		showHelp:             false,
 		size:                 p.Size,
-	}
+	}, []error{}
 }
 
 func (l LunaModel) Init() tea.Cmd {

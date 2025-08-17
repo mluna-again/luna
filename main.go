@@ -51,16 +51,16 @@ func main() {
 		Pet:       initialPet,
 		Size:      luna.LARGE,
 	}
-	errs := params.Validate()
+
+	l, errs := luna.NewLuna(params)
 	if len(errs) > 0 {
 		for _, e := range errs {
 			fmt.Println(e.Error())
 		}
 		os.Exit(1)
 	}
-
 	m := model{
-		luna: luna.NewLuna(params),
+		luna: l,
 	}
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
