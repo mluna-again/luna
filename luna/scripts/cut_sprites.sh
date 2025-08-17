@@ -38,12 +38,13 @@ cd luna/assets || exit
 assets_dir=$(pwd)
 
 make_sprites() {
-  local file size name
+  local file size name action
   file="$1"
   name="$2"
   size="$3"
+  action="$4"
 
-  printf "Making $name... "
+  printf "Making $name $action... "
 
   magick "$file" -crop "$size" "tile.png" || return 1
 
@@ -71,7 +72,7 @@ for action in idle sleeping attacking; do
     cd "$name" || exit
 
     no_ext=$(basename "$file" .png) || exit
-    make_sprites "$pet" "${name}_${action}" "$_SIZE" || exit
+    make_sprites "$pet" "$action" "$_SIZE" "$name" || exit
 
     cd "$assets_dir" || exit
   done
