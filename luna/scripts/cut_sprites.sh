@@ -10,6 +10,11 @@ Usage:
 
 # Just put your sprites in luna/assets and run (from the project root)
 $ ./luna/scripts/cut_sprites.sh
+//go:embed sprites/cat/sleeping0_sm.ascii
+var catSleeping0SM string
+...
+...
+...
 
 # If your sprites are not standard size (32x32) you can specify the size
 $ ./luna/scripts/cut_sprites.sh --size 64x64
@@ -42,22 +47,30 @@ make_sprites() {
   file="$1"
   name="$2"
   size="$3"
-  action="$4"
-
-  printf "Making $name $action... "
+  pet="$4"
 
   magick "$file" -crop "$size" "tile.png" || return 1
 
   frame=0
   for tile in tile*.png; do
-    chafa --size 32x32 "$tile" > "${name}${frame}_xl.ascii" || return 1
-    chafa --size 16x16 "$tile" > "${name}${frame}_md.ascii" || return 1
-    chafa --size 12x12 "$tile" > "${name}${frame}_sm.ascii" || return 1
+    small="${name}${frame}_sm.ascii"
+    medium="${name}${frame}_md.ascii"
+    large="${name}${frame}_xl.ascii"
+
+    chafa --size 32x32 "$tile" > "$large" || return 1
+    chafa --size 16x16 "$tile" > "$medium" || return 1
+    chafa --size 12x12 "$tile" > "$small" || return 1
+    cat <<EOF
+//go:embed sprites/${pet}/${small}
+var ${pet}${name^}${frame}SM string
+//go:embed sprites/${pet}/${medium}
+var ${pet}${name^}${frame}MD string
+//go:embed sprites/${pet}/${large}
+var ${pet}${name^}${frame}XL string
+EOF
 
     frame=$(( frame + 1 ))
   done
-
-  echo "done."
 
   rm *.png
 }

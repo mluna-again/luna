@@ -41,11 +41,21 @@ type LunaModel struct {
 	termH                int
 	termW                int
 	keysDisabled         bool
+	size                 LunaSize
 }
+
+type LunaSize string
+
+const (
+	SMALL  LunaSize = "sm"
+	MEDIUM          = "md"
+	LARGE           = "xl"
+)
 
 type NewLunaParams struct {
 	Animation string
 	Pet       string
+	Size      LunaSize
 }
 
 func (p NewLunaParams) Validate() []error {
@@ -78,8 +88,9 @@ func NewLuna(p NewLunaParams) LunaModel {
 		activePet:            p.Pet,
 		activeAnimation:      p.Animation,
 		activeFrame:          0,
-		activeAnimationCount: len(pets["cat"]["idle"]),
+		activeAnimationCount: len(pets["cat"][string(p.Size)]["idle"]),
 		showHelp:             false,
+		size:                 p.Size,
 	}
 }
 
@@ -95,8 +106,8 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 		return l, nil
 
 	case animationTickMsg:
-		animation := l.pets[l.activePet][l.activeAnimation]
-		if len(animation) == l.activeFrame+1 {
+		frameCount := l.getActiveFrameCount()
+		if frameCount == l.activeFrame+1 {
 			l.activeFrame = 0
 		} else {
 			l.activeFrame++
@@ -110,49 +121,31 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 		}
 		switch msg.String() {
 		case "0":
-			l.activeAnimation = "idle"
-			l.activeFrame = 0
-			l.activePet = "amogus"
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdatePet("amogus", "idle")
 			return l, nil
 
 		case "1":
-			l.activeAnimation = "idle"
-			l.activeFrame = 0
-			l.activePet = "cat"
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdatePet("cat", "idle")
 			return l, nil
 
 		case "2":
-			l.activeAnimation = "idle"
-			l.activeFrame = 0
-			l.activePet = "turtle"
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdatePet("turtle", "idle")
 			return l, nil
 
 		case "3":
-			l.activeAnimation = "idle"
-			l.activeFrame = 0
-			l.activePet = "bunny"
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdatePet("bunny", "idle")
 			return l, nil
 
 		case "s":
-			l.activeAnimation = "sleeping"
-			l.activeFrame = 0
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdateAnimation("sleeping")
 			return l, nil
 
 		case "i":
-			l.activeAnimation = "idle"
-			l.activeFrame = 0
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdateAnimation("idle")
 			return l, nil
 
 		case "a":
-			l.activeAnimation = "attacking"
-			l.activeFrame = 0
-			l.activeAnimationCount = len(l.pets[l.activePet][l.activeAnimation])
+			l.UpdateAnimation("attacking")
 			return l, nil
 
 		case "tab":
@@ -172,7 +165,7 @@ func (l LunaModel) View() string {
 		return fmt.Sprintf("Oh no: %s", l.err.Error())
 	}
 
-	ascii := l.pets[l.activePet][l.activeAnimation][l.activeFrame]
+	ascii := l.getActivePet()
 
 	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
 	if !l.showHelp {
@@ -188,4 +181,26 @@ func (l *LunaModel) DisableKeys() {
 
 func (l *LunaModel) EnableKeys() {
 	l.keysDisabled = false
+}
+
+func (l *LunaModel) UpdatePet(name string, animation string) {
+	l.activeAnimation = animation
+	l.activeFrame = 0
+	l.activePet = name
+	l.activeAnimationCount = len(l.pets[l.activePet][string(l.size)][l.activeAnimation])
+}
+
+func (l *LunaModel) UpdateAnimation(animation string) {
+	l.activeAnimation = animation
+	l.activeFrame = 0
+	l.activeAnimationCount = len(l.pets[l.activePet][string(l.size)][l.activeAnimation])
+}
+
+func (l LunaModel) getActivePet() string {
+	// yeah this is definetely not gonna crash
+	return l.pets[l.activePet][string(l.size)][l.activeAnimation][l.activeFrame]
+}
+
+func (l LunaModel) getActiveFrameCount() int {
+	return len(l.pets[l.activePet][string(l.size)][l.activeAnimation])
 }

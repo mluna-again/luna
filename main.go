@@ -49,6 +49,7 @@ func main() {
 	params := luna.NewLunaParams{
 		Animation: initialAnimation,
 		Pet:       initialPet,
+		Size:      luna.LARGE,
 	}
 	errs := params.Validate()
 	if len(errs) > 0 {
