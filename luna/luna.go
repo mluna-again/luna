@@ -212,3 +212,7 @@ func (l LunaModel) getActivePet() string {
 func (l LunaModel) getActiveFrameCount() int {
 	return len(l.pets[l.activePet][string(l.size)][l.activeAnimation])
 }
+
+func (l *LunaModel) SetSize(size LunaSize) {
+	l.size = size
+}
