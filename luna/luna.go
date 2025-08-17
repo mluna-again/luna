@@ -40,6 +40,7 @@ type LunaModel struct {
 	err                  error
 	termH                int
 	termW                int
+	keysDisabled         bool
 }
 
 type NewLunaParams struct {
@@ -86,7 +87,7 @@ func (l LunaModel) Init() tea.Cmd {
 	return tea.Batch(tea.HideCursor, l.animationTick())
 }
 
-func (l LunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		l.termH = msg.Height
@@ -104,6 +105,9 @@ func (l LunaModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return l, l.animationTick()
 
 	case tea.KeyMsg:
+		if l.keysDisabled {
+			break
+		}
 		switch msg.String() {
 		case "0":
 			l.activeAnimation = "idle"
@@ -177,4 +181,12 @@ func (l LunaModel) View() string {
 	}
 
 	return ascii + footer
+}
+
+func (l *LunaModel) DisableKeys() {
+	l.keysDisabled = true
+}
+
+func (l *LunaModel) EnableKeys() {
+	l.keysDisabled = false
 }
