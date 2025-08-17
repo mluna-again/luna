@@ -121,31 +121,31 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 		}
 		switch msg.String() {
 		case "0":
-			l.UpdatePet("amogus")
+			l.updatePet("amogus")
 			return l, nil
 
 		case "1":
-			l.UpdatePet("cat")
+			l.updatePet("cat")
 			return l, nil
 
 		case "2":
-			l.UpdatePet("turtle")
+			l.updatePet("turtle")
 			return l, nil
 
 		case "3":
-			l.UpdatePet("bunny")
+			l.updatePet("bunny")
 			return l, nil
 
 		case "s":
-			l.UpdateAnimation("sleeping")
+			l.updateAnimation("sleeping")
 			return l, nil
 
 		case "i":
-			l.UpdateAnimation("idle")
+			l.updateAnimation("idle")
 			return l, nil
 
 		case "a":
-			l.UpdateAnimation("attacking")
+			l.updateAnimation("attacking")
 			return l, nil
 
 		case "tab":
@@ -183,13 +183,13 @@ func (l *LunaModel) EnableKeys() {
 	l.keysDisabled = false
 }
 
-func (l *LunaModel) UpdatePet(name string) {
+func (l *LunaModel) updatePet(name string) {
 	l.activeFrame = 0
 	l.activePet = name
 	l.activeAnimationCount = len(l.pets[l.activePet][string(l.size)][l.activeAnimation])
 }
 
-func (l *LunaModel) UpdateAnimation(animation string) {
+func (l *LunaModel) updateAnimation(animation string) {
 	l.activeAnimation = animation
 	l.activeFrame = 0
 	l.activeAnimationCount = len(l.pets[l.activePet][string(l.size)][l.activeAnimation])
