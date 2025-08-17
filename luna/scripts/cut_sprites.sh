@@ -57,9 +57,9 @@ make_sprites() {
     medium="${name}${frame}_md.ascii"
     large="${name}${frame}_xl.ascii"
 
-    chafa --size 32x32 "$tile" > "$large" || return 1
-    chafa --size 16x16 "$tile" > "$medium" || return 1
-    chafa --size 12x12 "$tile" > "$small" || return 1
+    chafa --scale max --size 44x44 "$tile" > "$large" || return 1
+    chafa --scale max --size 32x32 "$tile" > "$medium" || return 1
+    chafa --scale max --size 20x20 "$tile" > "$small" || return 1
     cat <<EOF
 //go:embed sprites/${pet}/${small}
 var ${pet}${name^}${frame}SM string

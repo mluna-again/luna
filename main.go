@@ -26,9 +26,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.termH = msg.Height
 		m.termW = msg.Width
 
-		if m.termW < 20 {
+		if m.termW < 30 {
 			m.luna.SetSize(luna.SMALL)
-		} else if m.termW < 40 {
+		} else if m.termW < 60 {
 			m.luna.SetSize(luna.MEDIUM)
 		} else {
 			m.luna.SetSize(luna.LARGE)
