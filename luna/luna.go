@@ -173,7 +173,6 @@ func (l LunaModel) View() string {
 	}
 
 	ascii := l.pets[l.activePet][l.activeAnimation][l.activeFrame]
-	ascii = lipgloss.Place(l.termW, l.termH, lipgloss.Center, lipgloss.Center, ascii)
 
 	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
 	if !l.showHelp {
