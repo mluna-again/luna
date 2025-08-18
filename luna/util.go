@@ -47,3 +47,26 @@ func translateVariant(name LunaVariant) LunaVariant {
 
 	return name
 }
+
+func nextVariant(variant LunaVariant, pet LunaPet) LunaVariant {
+	if !hasNextVariant(pet) {
+		return variant
+	}
+
+	switch pet {
+	case CAT:
+		switch variant {
+		case CAT_BLACK:
+			return CAT_RAGDOLL
+
+		case CAT_RAGDOLL:
+			return CAT_BLACK
+		}
+	}
+
+	return DEFAULT_VARIANT
+}
+
+func hasNextVariant(pet LunaPet) bool {
+	return pet == CAT
+}

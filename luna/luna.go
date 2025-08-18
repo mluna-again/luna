@@ -203,6 +203,10 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 			l.showHelp = !l.showHelp
 			return l, nil
 
+		case ">":
+			l.SetVariant(nextVariant(l.activeVariant, l.activePet))
+			return l, nil
+
 		case " ":
 			l.displayName = !l.displayName
 
@@ -226,6 +230,8 @@ func (l LunaModel) View() string {
 	}
 
 	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
+	footer = lipgloss.JoinVertical(lipgloss.Center, footer, lipgloss.JoinHorizontal(lipgloss.Center, "> - switch variant"))
+	footer = lipgloss.JoinVertical(lipgloss.Center, footer, lipgloss.JoinHorizontal(lipgloss.Center, "1 - cat  2 - bunny  3 - turtle"))
 	if !l.showHelp {
 		return ascii
 	}
@@ -249,6 +255,12 @@ func (l *LunaModel) SetPet(name LunaPet) {
 
 func (l *LunaModel) SetAnimation(animation LunaAnimation) {
 	l.activeAnimation = animation
+	l.activeFrame = 0
+	l.activeAnimationCount = l.getActiveFrameCount()
+}
+
+func (l *LunaModel) SetVariant(variant LunaVariant) {
+	l.activeVariant = getSelectedVariant(l.activePet, variant)
 	l.activeFrame = 0
 	l.activeAnimationCount = l.getActiveFrameCount()
 }
