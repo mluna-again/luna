@@ -55,8 +55,8 @@ func main() {
 	flag.Parse()
 
 	params := luna.NewLunaParams{
-		Animation: initialAnimation,
-		Pet:       initialPet,
+		Animation: luna.LunaAnimation(initialAnimation),
+		Pet:       luna.LunaPet(initialPet),
 		Size:      luna.LARGE,
 	}
 

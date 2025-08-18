@@ -2,9 +2,9 @@ package luna
 
 import _ "embed"
 
-type asciiAnimation map[string]map[string][]string
+type asciiAnimation map[LunaSize]map[LunaAnimation][]string
 
-type asciiPets map[string]asciiAnimation
+type asciiPets map[LunaPet]asciiAnimation
 
 //go:embed sprites/amogus/amogus0.ascii
 var amogus0 string
@@ -622,7 +622,7 @@ var turtleAttacking9XL string
 func getPets() asciiPets {
 	return asciiPets{
 		"amogus": asciiAnimation{
-			"sm": map[string][]string{
+			"sm": map[LunaAnimation][]string{
 				"idle": []string{
 					amogus0,
 					amogus1,
@@ -648,7 +648,7 @@ func getPets() asciiPets {
 					amogus5,
 				},
 			},
-			"md": map[string][]string{
+			"md": map[LunaAnimation][]string{
 				"idle": []string{
 					amogus0,
 					amogus1,
@@ -674,7 +674,7 @@ func getPets() asciiPets {
 					amogus5,
 				},
 			},
-			"xl": map[string][]string{
+			"xl": map[LunaAnimation][]string{
 				"idle": []string{
 					amogus0,
 					amogus1,
@@ -702,7 +702,7 @@ func getPets() asciiPets {
 			},
 		},
 		"bunny": asciiAnimation{
-			"sm": map[string][]string{
+			"sm": map[LunaAnimation][]string{
 				"idle": []string{
 					bunnyIdle0SM,
 					bunnyIdle1SM,
@@ -726,7 +726,7 @@ func getPets() asciiPets {
 					bunnyAttacking6SM,
 				},
 			},
-			"md": map[string][]string{
+			"md": map[LunaAnimation][]string{
 				"idle": []string{
 					bunnyIdle0MD,
 					bunnyIdle1MD,
@@ -750,7 +750,7 @@ func getPets() asciiPets {
 					bunnyAttacking6MD,
 				},
 			},
-			"xl": map[string][]string{
+			"xl": map[LunaAnimation][]string{
 				"idle": []string{
 					bunnyIdle0XL,
 					bunnyIdle1XL,
@@ -776,7 +776,7 @@ func getPets() asciiPets {
 			},
 		},
 		"turtle": asciiAnimation{
-			"sm": map[string][]string{
+			"sm": map[LunaAnimation][]string{
 				"idle": []string{
 					turtleIdle0SM,
 					turtleIdle1SM,
@@ -814,7 +814,7 @@ func getPets() asciiPets {
 					turtleAttacking9SM,
 				},
 			},
-			"md": map[string][]string{
+			"md": map[LunaAnimation][]string{
 				"idle": []string{
 					turtleIdle0MD,
 					turtleIdle1MD,
@@ -852,7 +852,7 @@ func getPets() asciiPets {
 					turtleAttacking9MD,
 				},
 			},
-			"xl": map[string][]string{
+			"xl": map[LunaAnimation][]string{
 				"idle": []string{
 					turtleIdle0XL,
 					turtleIdle1XL,
@@ -892,7 +892,7 @@ func getPets() asciiPets {
 			},
 		},
 		"cat": asciiAnimation{
-			"sm": map[string][]string{
+			"sm": map[LunaAnimation][]string{
 				"idle": []string{
 					catIdle0SM,
 					catIdle1SM,
@@ -919,7 +919,7 @@ func getPets() asciiPets {
 					catAttacking8SM,
 				},
 			},
-			"md": map[string][]string{
+			"md": map[LunaAnimation][]string{
 				"idle": []string{
 					catIdle0MD,
 					catIdle1MD,
@@ -946,7 +946,7 @@ func getPets() asciiPets {
 					catAttacking8MD,
 				},
 			},
-			"xl": map[string][]string{
+			"xl": map[LunaAnimation][]string{
 				"idle": []string{
 					catIdle0XL,
 					catIdle1XL,
