@@ -33,6 +33,9 @@ func getDefaultVariant(name LunaPet) LunaVariant {
 func getSelectedVariant(name LunaPet, variant LunaVariant) LunaVariant {
 	switch name {
 	case CAT:
+		if variant == "black" {
+			return DEFAULT_VARIANT
+		}
 		return variant
 
 	default:
