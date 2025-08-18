@@ -1152,7 +1152,7 @@ func getPets() asciiPets {
 					},
 				},
 			},
-			"black": map[LunaSize]map[LunaAnimation][]string{
+			"default": map[LunaSize]map[LunaAnimation][]string{
 				"sm": map[LunaAnimation][]string{
 					"idle": []string{
 						blackcatIdle0SM,

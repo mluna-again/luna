@@ -29,3 +29,21 @@ func getDefaultVariant(name LunaPet) LunaVariant {
 		return DEFAULT_VARIANT
 	}
 }
+
+func getSelectedVariant(name LunaPet, variant LunaVariant) LunaVariant {
+	switch name {
+	case CAT:
+		return variant
+
+	default:
+		return DEFAULT_VARIANT
+	}
+}
+
+func translateVariant(name LunaVariant) LunaVariant {
+	if name == "black" {
+		return CAT_BLACK
+	}
+
+	return name
+}

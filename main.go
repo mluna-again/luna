@@ -53,7 +53,7 @@ var initialVariant string
 func main() {
 	flag.StringVar(&initialAnimation, "animation", "idle", "initial animation, can be: idle, sleeping, attacking. default: idle")
 	flag.StringVar(&initialPet, "pet", "cat", "initial pet. can be: cat, turtle, bunny. default: cat")
-	flag.StringVar(&initialVariant, "variant", "ragdoll", "initial variant (available for: cat). can be: ragdoll, black. default: ragdoll.")
+	flag.StringVar(&initialVariant, "variant", "black", "initial variant (available for: cat). can be: ragdoll, black. default: black.")
 	flag.Parse()
 
 	params := luna.NewLunaParams{

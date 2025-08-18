@@ -34,8 +34,8 @@ const (
 )
 
 const (
-	CAT_RAGDOLL     LunaVariant = "ragdoll"
-	CAT_BLACK                   = "black"
+	CAT_BLACK       LunaVariant = "default"
+	CAT_RAGDOLL                 = "ragdoll"
 	DEFAULT_VARIANT             = "default"
 )
 
@@ -103,6 +103,7 @@ func (p NewLunaParams) Validate() (NewLunaParams, []error) {
 	if p.Variant == "" {
 		p.Variant = getDefaultVariant(p.Pet)
 	}
+	p.Variant = translateVariant(p.Variant)
 
 	errs := []error{}
 
@@ -243,13 +244,13 @@ func (l *LunaModel) EnableKeys() {
 func (l *LunaModel) SetPet(name LunaPet) {
 	l.activeFrame = 0
 	l.activePet = name
-	l.activeAnimationCount = len(l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation])
+	l.activeAnimationCount = l.getActiveFrameCount()
 }
 
 func (l *LunaModel) SetAnimation(animation LunaAnimation) {
 	l.activeAnimation = animation
 	l.activeFrame = 0
-	l.activeAnimationCount = len(l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation])
+	l.activeAnimationCount = l.getActiveFrameCount()
 }
 
 func (l LunaModel) GetAnimation() LunaAnimation {
@@ -258,11 +259,11 @@ func (l LunaModel) GetAnimation() LunaAnimation {
 
 func (l LunaModel) getActivePet() string {
 	// yeah this is definetely not gonna crash
-	return l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation][l.activeFrame]
+	return l.pets[l.activePet][getSelectedVariant(l.activePet, l.activeVariant)][l.size][l.activeAnimation][l.activeFrame]
 }
 
 func (l LunaModel) getActiveFrameCount() int {
-	return len(l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation])
+	return len(l.pets[l.activePet][getSelectedVariant(l.activePet, l.activeVariant)][l.size][l.activeAnimation])
 }
 
 func (l *LunaModel) SetSize(size LunaSize) {
