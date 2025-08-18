@@ -2,7 +2,7 @@ package luna
 
 import _ "embed"
 
-type asciiAnimation map[LunaSize]map[LunaAnimation][]string
+type asciiAnimation map[LunaVariant]map[LunaSize]map[LunaAnimation][]string
 
 type asciiPets map[LunaPet]asciiAnimation
 
@@ -95,6 +95,177 @@ var bunnyIdle7MD string
 
 //go:embed sprites/bunny/idle7_xl.ascii
 var bunnyIdle7XL string
+
+//go:embed sprites/blackcat/idle0_sm.ascii
+var blackcatIdle0SM string
+
+//go:embed sprites/blackcat/idle0_md.ascii
+var blackcatIdle0MD string
+
+//go:embed sprites/blackcat/idle0_xl.ascii
+var blackcatIdle0XL string
+
+//go:embed sprites/blackcat/idle1_sm.ascii
+var blackcatIdle1SM string
+
+//go:embed sprites/blackcat/idle1_md.ascii
+var blackcatIdle1MD string
+
+//go:embed sprites/blackcat/idle1_xl.ascii
+var blackcatIdle1XL string
+
+//go:embed sprites/blackcat/idle2_sm.ascii
+var blackcatIdle2SM string
+
+//go:embed sprites/blackcat/idle2_md.ascii
+var blackcatIdle2MD string
+
+//go:embed sprites/blackcat/idle2_xl.ascii
+var blackcatIdle2XL string
+
+//go:embed sprites/blackcat/idle3_sm.ascii
+var blackcatIdle3SM string
+
+//go:embed sprites/blackcat/idle3_md.ascii
+var blackcatIdle3MD string
+
+//go:embed sprites/blackcat/idle3_xl.ascii
+var blackcatIdle3XL string
+
+//go:embed sprites/blackcat/idle4_sm.ascii
+var blackcatIdle4SM string
+
+//go:embed sprites/blackcat/idle4_md.ascii
+var blackcatIdle4MD string
+
+//go:embed sprites/blackcat/idle4_xl.ascii
+var blackcatIdle4XL string
+
+//go:embed sprites/blackcat/idle5_sm.ascii
+var blackcatIdle5SM string
+
+//go:embed sprites/blackcat/idle5_md.ascii
+var blackcatIdle5MD string
+
+//go:embed sprites/blackcat/idle5_xl.ascii
+var blackcatIdle5XL string
+
+//go:embed sprites/blackcat/idle6_sm.ascii
+var blackcatIdle6SM string
+
+//go:embed sprites/blackcat/idle6_md.ascii
+var blackcatIdle6MD string
+
+//go:embed sprites/blackcat/idle6_xl.ascii
+var blackcatIdle6XL string
+
+//go:embed sprites/blackcat/sleeping0_sm.ascii
+var blackcatSleeping0SM string
+
+//go:embed sprites/blackcat/sleeping0_md.ascii
+var blackcatSleeping0MD string
+
+//go:embed sprites/blackcat/sleeping0_xl.ascii
+var blackcatSleeping0XL string
+
+//go:embed sprites/blackcat/sleeping1_sm.ascii
+var blackcatSleeping1SM string
+
+//go:embed sprites/blackcat/sleeping1_md.ascii
+var blackcatSleeping1MD string
+
+//go:embed sprites/blackcat/sleeping1_xl.ascii
+var blackcatSleeping1XL string
+
+//go:embed sprites/blackcat/sleeping2_sm.ascii
+var blackcatSleeping2SM string
+
+//go:embed sprites/blackcat/sleeping2_md.ascii
+var blackcatSleeping2MD string
+
+//go:embed sprites/blackcat/sleeping2_xl.ascii
+var blackcatSleeping2XL string
+
+//go:embed sprites/blackcat/attacking0_sm.ascii
+var blackcatAttacking0SM string
+
+//go:embed sprites/blackcat/attacking0_md.ascii
+var blackcatAttacking0MD string
+
+//go:embed sprites/blackcat/attacking0_xl.ascii
+var blackcatAttacking0XL string
+
+//go:embed sprites/blackcat/attacking1_sm.ascii
+var blackcatAttacking1SM string
+
+//go:embed sprites/blackcat/attacking1_md.ascii
+var blackcatAttacking1MD string
+
+//go:embed sprites/blackcat/attacking1_xl.ascii
+var blackcatAttacking1XL string
+
+//go:embed sprites/blackcat/attacking2_sm.ascii
+var blackcatAttacking2SM string
+
+//go:embed sprites/blackcat/attacking2_md.ascii
+var blackcatAttacking2MD string
+
+//go:embed sprites/blackcat/attacking2_xl.ascii
+var blackcatAttacking2XL string
+
+//go:embed sprites/blackcat/attacking3_sm.ascii
+var blackcatAttacking3SM string
+
+//go:embed sprites/blackcat/attacking3_md.ascii
+var blackcatAttacking3MD string
+
+//go:embed sprites/blackcat/attacking3_xl.ascii
+var blackcatAttacking3XL string
+
+//go:embed sprites/blackcat/attacking4_sm.ascii
+var blackcatAttacking4SM string
+
+//go:embed sprites/blackcat/attacking4_md.ascii
+var blackcatAttacking4MD string
+
+//go:embed sprites/blackcat/attacking4_xl.ascii
+var blackcatAttacking4XL string
+
+//go:embed sprites/blackcat/attacking5_sm.ascii
+var blackcatAttacking5SM string
+
+//go:embed sprites/blackcat/attacking5_md.ascii
+var blackcatAttacking5MD string
+
+//go:embed sprites/blackcat/attacking5_xl.ascii
+var blackcatAttacking5XL string
+
+//go:embed sprites/blackcat/attacking6_sm.ascii
+var blackcatAttacking6SM string
+
+//go:embed sprites/blackcat/attacking6_md.ascii
+var blackcatAttacking6MD string
+
+//go:embed sprites/blackcat/attacking6_xl.ascii
+var blackcatAttacking6XL string
+
+//go:embed sprites/blackcat/attacking7_sm.ascii
+var blackcatAttacking7SM string
+
+//go:embed sprites/blackcat/attacking7_md.ascii
+var blackcatAttacking7MD string
+
+//go:embed sprites/blackcat/attacking7_xl.ascii
+var blackcatAttacking7XL string
+
+//go:embed sprites/blackcat/attacking8_sm.ascii
+var blackcatAttacking8SM string
+
+//go:embed sprites/blackcat/attacking8_md.ascii
+var blackcatAttacking8MD string
+
+//go:embed sprites/blackcat/attacking8_xl.ascii
+var blackcatAttacking8XL string
 
 //go:embed sprites/cat/idle0_sm.ascii
 var catIdle0SM string
@@ -622,355 +793,446 @@ var turtleAttacking9XL string
 func getPets() asciiPets {
 	return asciiPets{
 		"amogus": asciiAnimation{
-			"sm": map[LunaAnimation][]string{
-				"idle": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
+			"default": map[LunaSize]map[LunaAnimation][]string{
+				"sm": map[LunaAnimation][]string{
+					"idle": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
+					"sleeping": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
+					"attacking": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
 				},
-				"sleeping": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
+				"md": map[LunaAnimation][]string{
+					"idle": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
+					"sleeping": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
+					"attacking": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
 				},
-				"attacking": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
-				},
-			},
-			"md": map[LunaAnimation][]string{
-				"idle": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
-				},
-				"sleeping": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
-				},
-				"attacking": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
-				},
-			},
-			"xl": map[LunaAnimation][]string{
-				"idle": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
-				},
-				"sleeping": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
-				},
-				"attacking": []string{
-					amogus0,
-					amogus1,
-					amogus2,
-					amogus3,
-					amogus4,
-					amogus5,
+				"xl": map[LunaAnimation][]string{
+					"idle": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
+					"sleeping": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
+					"attacking": []string{
+						amogus0,
+						amogus1,
+						amogus2,
+						amogus3,
+						amogus4,
+						amogus5,
+					},
 				},
 			},
 		},
 		"bunny": asciiAnimation{
-			"sm": map[LunaAnimation][]string{
-				"idle": []string{
-					bunnyIdle0SM,
-					bunnyIdle1SM,
-					bunnyIdle2SM,
-					bunnyIdle3SM,
-					bunnyIdle5SM,
-					bunnyIdle6SM,
-					bunnyIdle7SM,
+			"default": map[LunaSize]map[LunaAnimation][]string{
+				"sm": map[LunaAnimation][]string{
+					"idle": []string{
+						bunnyIdle0SM,
+						bunnyIdle1SM,
+						bunnyIdle2SM,
+						bunnyIdle3SM,
+						bunnyIdle5SM,
+						bunnyIdle6SM,
+						bunnyIdle7SM,
+					},
+					"sleeping": []string{
+						bunnySleeping0SM,
+						bunnySleeping1SM,
+					},
+					"attacking": []string{
+						bunnyAttacking0SM,
+						bunnyAttacking1SM,
+						bunnyAttacking2SM,
+						bunnyAttacking3SM,
+						bunnyAttacking4SM,
+						bunnyAttacking5SM,
+						bunnyAttacking6SM,
+					},
 				},
-				"sleeping": []string{
-					bunnySleeping0SM,
-					bunnySleeping1SM,
+				"md": map[LunaAnimation][]string{
+					"idle": []string{
+						bunnyIdle0MD,
+						bunnyIdle1MD,
+						bunnyIdle2MD,
+						bunnyIdle3MD,
+						bunnyIdle5MD,
+						bunnyIdle6MD,
+						bunnyIdle7MD,
+					},
+					"sleeping": []string{
+						bunnySleeping0MD,
+						bunnySleeping1MD,
+					},
+					"attacking": []string{
+						bunnyAttacking0MD,
+						bunnyAttacking1MD,
+						bunnyAttacking2MD,
+						bunnyAttacking3MD,
+						bunnyAttacking4MD,
+						bunnyAttacking5MD,
+						bunnyAttacking6MD,
+					},
 				},
-				"attacking": []string{
-					bunnyAttacking0SM,
-					bunnyAttacking1SM,
-					bunnyAttacking2SM,
-					bunnyAttacking3SM,
-					bunnyAttacking4SM,
-					bunnyAttacking5SM,
-					bunnyAttacking6SM,
-				},
-			},
-			"md": map[LunaAnimation][]string{
-				"idle": []string{
-					bunnyIdle0MD,
-					bunnyIdle1MD,
-					bunnyIdle2MD,
-					bunnyIdle3MD,
-					bunnyIdle5MD,
-					bunnyIdle6MD,
-					bunnyIdle7MD,
-				},
-				"sleeping": []string{
-					bunnySleeping0MD,
-					bunnySleeping1MD,
-				},
-				"attacking": []string{
-					bunnyAttacking0MD,
-					bunnyAttacking1MD,
-					bunnyAttacking2MD,
-					bunnyAttacking3MD,
-					bunnyAttacking4MD,
-					bunnyAttacking5MD,
-					bunnyAttacking6MD,
-				},
-			},
-			"xl": map[LunaAnimation][]string{
-				"idle": []string{
-					bunnyIdle0XL,
-					bunnyIdle1XL,
-					bunnyIdle2XL,
-					bunnyIdle3XL,
-					bunnyIdle5XL,
-					bunnyIdle6XL,
-					bunnyIdle7XL,
-				},
-				"sleeping": []string{
-					bunnySleeping0XL,
-					bunnySleeping1XL,
-				},
-				"attacking": []string{
-					bunnyAttacking0XL,
-					bunnyAttacking1XL,
-					bunnyAttacking2XL,
-					bunnyAttacking3XL,
-					bunnyAttacking4XL,
-					bunnyAttacking5XL,
-					bunnyAttacking6XL,
+				"xl": map[LunaAnimation][]string{
+					"idle": []string{
+						bunnyIdle0XL,
+						bunnyIdle1XL,
+						bunnyIdle2XL,
+						bunnyIdle3XL,
+						bunnyIdle5XL,
+						bunnyIdle6XL,
+						bunnyIdle7XL,
+					},
+					"sleeping": []string{
+						bunnySleeping0XL,
+						bunnySleeping1XL,
+					},
+					"attacking": []string{
+						bunnyAttacking0XL,
+						bunnyAttacking1XL,
+						bunnyAttacking2XL,
+						bunnyAttacking3XL,
+						bunnyAttacking4XL,
+						bunnyAttacking5XL,
+						bunnyAttacking6XL,
+					},
 				},
 			},
 		},
 		"turtle": asciiAnimation{
-			"sm": map[LunaAnimation][]string{
-				"idle": []string{
-					turtleIdle0SM,
-					turtleIdle1SM,
-					turtleIdle2SM,
-					turtleIdle3SM,
-					turtleIdle4SM,
-					turtleIdle5SM,
-					turtleIdle6SM,
-					turtleIdle7SM,
+			"default": map[LunaSize]map[LunaAnimation][]string{
+				"sm": map[LunaAnimation][]string{
+					"idle": []string{
+						turtleIdle0SM,
+						turtleIdle1SM,
+						turtleIdle2SM,
+						turtleIdle3SM,
+						turtleIdle4SM,
+						turtleIdle5SM,
+						turtleIdle6SM,
+						turtleIdle7SM,
+					},
+					"sleeping": []string{
+						turtleSleeping0SM,
+						turtleSleeping1SM,
+						turtleSleeping2SM,
+						turtleSleeping3SM,
+						turtleSleeping4SM,
+						turtleSleeping5SM,
+						turtleSleeping6SM,
+						turtleSleeping7SM,
+						turtleSleeping8SM,
+						turtleSleeping9SM,
+						turtleSleeping10SM,
+						turtleSleeping11SM,
+					},
+					"attacking": []string{
+						turtleAttacking0SM,
+						turtleAttacking1SM,
+						turtleAttacking2SM,
+						turtleAttacking3SM,
+						turtleAttacking4SM,
+						turtleAttacking5SM,
+						turtleAttacking6SM,
+						turtleAttacking7SM,
+						turtleAttacking8SM,
+						turtleAttacking9SM,
+					},
 				},
-				"sleeping": []string{
-					turtleSleeping0SM,
-					turtleSleeping1SM,
-					turtleSleeping2SM,
-					turtleSleeping3SM,
-					turtleSleeping4SM,
-					turtleSleeping5SM,
-					turtleSleeping6SM,
-					turtleSleeping7SM,
-					turtleSleeping8SM,
-					turtleSleeping9SM,
-					turtleSleeping10SM,
-					turtleSleeping11SM,
+				"md": map[LunaAnimation][]string{
+					"idle": []string{
+						turtleIdle0MD,
+						turtleIdle1MD,
+						turtleIdle2MD,
+						turtleIdle3MD,
+						turtleIdle4MD,
+						turtleIdle5MD,
+						turtleIdle6MD,
+						turtleIdle7MD,
+					},
+					"sleeping": []string{
+						turtleSleeping0MD,
+						turtleSleeping1MD,
+						turtleSleeping2MD,
+						turtleSleeping3MD,
+						turtleSleeping4MD,
+						turtleSleeping5MD,
+						turtleSleeping6MD,
+						turtleSleeping7MD,
+						turtleSleeping8MD,
+						turtleSleeping9MD,
+						turtleSleeping10MD,
+						turtleSleeping11MD,
+					},
+					"attacking": []string{
+						turtleAttacking0MD,
+						turtleAttacking1MD,
+						turtleAttacking2MD,
+						turtleAttacking3MD,
+						turtleAttacking4MD,
+						turtleAttacking5MD,
+						turtleAttacking6MD,
+						turtleAttacking7MD,
+						turtleAttacking8MD,
+						turtleAttacking9MD,
+					},
 				},
-				"attacking": []string{
-					turtleAttacking0SM,
-					turtleAttacking1SM,
-					turtleAttacking2SM,
-					turtleAttacking3SM,
-					turtleAttacking4SM,
-					turtleAttacking5SM,
-					turtleAttacking6SM,
-					turtleAttacking7SM,
-					turtleAttacking8SM,
-					turtleAttacking9SM,
-				},
-			},
-			"md": map[LunaAnimation][]string{
-				"idle": []string{
-					turtleIdle0MD,
-					turtleIdle1MD,
-					turtleIdle2MD,
-					turtleIdle3MD,
-					turtleIdle4MD,
-					turtleIdle5MD,
-					turtleIdle6MD,
-					turtleIdle7MD,
-				},
-				"sleeping": []string{
-					turtleSleeping0MD,
-					turtleSleeping1MD,
-					turtleSleeping2MD,
-					turtleSleeping3MD,
-					turtleSleeping4MD,
-					turtleSleeping5MD,
-					turtleSleeping6MD,
-					turtleSleeping7MD,
-					turtleSleeping8MD,
-					turtleSleeping9MD,
-					turtleSleeping10MD,
-					turtleSleeping11MD,
-				},
-				"attacking": []string{
-					turtleAttacking0MD,
-					turtleAttacking1MD,
-					turtleAttacking2MD,
-					turtleAttacking3MD,
-					turtleAttacking4MD,
-					turtleAttacking5MD,
-					turtleAttacking6MD,
-					turtleAttacking7MD,
-					turtleAttacking8MD,
-					turtleAttacking9MD,
-				},
-			},
-			"xl": map[LunaAnimation][]string{
-				"idle": []string{
-					turtleIdle0XL,
-					turtleIdle1XL,
-					turtleIdle2XL,
-					turtleIdle3XL,
-					turtleIdle4XL,
-					turtleIdle5XL,
-					turtleIdle6XL,
-					turtleIdle7XL,
-				},
-				"sleeping": []string{
-					turtleSleeping0XL,
-					turtleSleeping1XL,
-					turtleSleeping2XL,
-					turtleSleeping3XL,
-					turtleSleeping4XL,
-					turtleSleeping5XL,
-					turtleSleeping6XL,
-					turtleSleeping7XL,
-					turtleSleeping8XL,
-					turtleSleeping9XL,
-					turtleSleeping10XL,
-					turtleSleeping11XL,
-				},
-				"attacking": []string{
-					turtleAttacking0XL,
-					turtleAttacking1XL,
-					turtleAttacking2XL,
-					turtleAttacking3XL,
-					turtleAttacking4XL,
-					turtleAttacking5XL,
-					turtleAttacking6XL,
-					turtleAttacking7XL,
-					turtleAttacking8XL,
-					turtleAttacking9XL,
+				"xl": map[LunaAnimation][]string{
+					"idle": []string{
+						turtleIdle0XL,
+						turtleIdle1XL,
+						turtleIdle2XL,
+						turtleIdle3XL,
+						turtleIdle4XL,
+						turtleIdle5XL,
+						turtleIdle6XL,
+						turtleIdle7XL,
+					},
+					"sleeping": []string{
+						turtleSleeping0XL,
+						turtleSleeping1XL,
+						turtleSleeping2XL,
+						turtleSleeping3XL,
+						turtleSleeping4XL,
+						turtleSleeping5XL,
+						turtleSleeping6XL,
+						turtleSleeping7XL,
+						turtleSleeping8XL,
+						turtleSleeping9XL,
+						turtleSleeping10XL,
+						turtleSleeping11XL,
+					},
+					"attacking": []string{
+						turtleAttacking0XL,
+						turtleAttacking1XL,
+						turtleAttacking2XL,
+						turtleAttacking3XL,
+						turtleAttacking4XL,
+						turtleAttacking5XL,
+						turtleAttacking6XL,
+						turtleAttacking7XL,
+						turtleAttacking8XL,
+						turtleAttacking9XL,
+					},
 				},
 			},
 		},
 		"cat": asciiAnimation{
-			"sm": map[LunaAnimation][]string{
-				"idle": []string{
-					catIdle0SM,
-					catIdle1SM,
-					catIdle2SM,
-					catIdle3SM,
-					catIdle4SM,
-					catIdle5SM,
-					catIdle6SM,
+			"ragdoll": map[LunaSize]map[LunaAnimation][]string{
+				"sm": map[LunaAnimation][]string{
+					"idle": []string{
+						catIdle0SM,
+						catIdle1SM,
+						catIdle2SM,
+						catIdle3SM,
+						catIdle4SM,
+						catIdle5SM,
+						catIdle6SM,
+					},
+					"sleeping": []string{
+						catSleeping0SM,
+						catSleeping1SM,
+						catSleeping2SM,
+					},
+					"attacking": []string{
+						catAttacking0SM,
+						catAttacking1SM,
+						catAttacking2SM,
+						catAttacking3SM,
+						catAttacking4SM,
+						catAttacking5SM,
+						catAttacking6SM,
+						catAttacking7SM,
+						catAttacking8SM,
+					},
 				},
-				"sleeping": []string{
-					catSleeping0SM,
-					catSleeping1SM,
-					catSleeping2SM,
+				"md": map[LunaAnimation][]string{
+					"idle": []string{
+						catIdle0MD,
+						catIdle1MD,
+						catIdle2MD,
+						catIdle3MD,
+						catIdle4MD,
+						catIdle5MD,
+						catIdle6MD,
+					},
+					"sleeping": []string{
+						catSleeping0MD,
+						catSleeping1MD,
+						catSleeping2MD,
+					},
+					"attacking": []string{
+						catAttacking0MD,
+						catAttacking1MD,
+						catAttacking2MD,
+						catAttacking3MD,
+						catAttacking4MD,
+						catAttacking5MD,
+						catAttacking6MD,
+						catAttacking7MD,
+						catAttacking8MD,
+					},
 				},
-				"attacking": []string{
-					catAttacking0SM,
-					catAttacking1SM,
-					catAttacking2SM,
-					catAttacking3SM,
-					catAttacking4SM,
-					catAttacking5SM,
-					catAttacking6SM,
-					catAttacking7SM,
-					catAttacking8SM,
+				"xl": map[LunaAnimation][]string{
+					"idle": []string{
+						catIdle0XL,
+						catIdle1XL,
+						catIdle2XL,
+						catIdle3XL,
+						catIdle4XL,
+						catIdle5XL,
+						catIdle6XL,
+					},
+					"sleeping": []string{
+						catSleeping0XL,
+						catSleeping1XL,
+						catSleeping2XL,
+					},
+					"attacking": []string{
+						catAttacking0XL,
+						catAttacking1XL,
+						catAttacking2XL,
+						catAttacking3XL,
+						catAttacking4XL,
+						catAttacking5XL,
+						catAttacking6XL,
+						catAttacking7XL,
+						catAttacking8XL,
+					},
 				},
 			},
-			"md": map[LunaAnimation][]string{
-				"idle": []string{
-					catIdle0MD,
-					catIdle1MD,
-					catIdle2MD,
-					catIdle3MD,
-					catIdle4MD,
-					catIdle5MD,
-					catIdle6MD,
+			"black": map[LunaSize]map[LunaAnimation][]string{
+				"sm": map[LunaAnimation][]string{
+					"idle": []string{
+						blackcatIdle0SM,
+						blackcatIdle1SM,
+						blackcatIdle2SM,
+						blackcatIdle3SM,
+						blackcatIdle4SM,
+						blackcatIdle5SM,
+						blackcatIdle6SM,
+					},
+					"sleeping": []string{
+						blackcatSleeping0SM,
+						blackcatSleeping1SM,
+						blackcatSleeping2SM,
+					},
+					"attacking": []string{
+						blackcatAttacking0SM,
+						blackcatAttacking1SM,
+						blackcatAttacking2SM,
+						blackcatAttacking3SM,
+						blackcatAttacking4SM,
+						blackcatAttacking5SM,
+						blackcatAttacking6SM,
+						blackcatAttacking7SM,
+						blackcatAttacking8SM,
+					},
 				},
-				"sleeping": []string{
-					catSleeping0MD,
-					catSleeping1MD,
-					catSleeping2MD,
+				"md": map[LunaAnimation][]string{
+					"idle": []string{
+						blackcatIdle0MD,
+						blackcatIdle1MD,
+						blackcatIdle2MD,
+						blackcatIdle3MD,
+						blackcatIdle4MD,
+						blackcatIdle5MD,
+						blackcatIdle6MD,
+					},
+					"sleeping": []string{
+						blackcatSleeping0MD,
+						blackcatSleeping1MD,
+						blackcatSleeping2MD,
+					},
+					"attacking": []string{
+						blackcatAttacking0MD,
+						blackcatAttacking1MD,
+						blackcatAttacking2MD,
+						blackcatAttacking3MD,
+						blackcatAttacking4MD,
+						blackcatAttacking5MD,
+						blackcatAttacking6MD,
+						blackcatAttacking7MD,
+						blackcatAttacking8MD,
+					},
 				},
-				"attacking": []string{
-					catAttacking0MD,
-					catAttacking1MD,
-					catAttacking2MD,
-					catAttacking3MD,
-					catAttacking4MD,
-					catAttacking5MD,
-					catAttacking6MD,
-					catAttacking7MD,
-					catAttacking8MD,
-				},
-			},
-			"xl": map[LunaAnimation][]string{
-				"idle": []string{
-					catIdle0XL,
-					catIdle1XL,
-					catIdle2XL,
-					catIdle3XL,
-					catIdle4XL,
-					catIdle5XL,
-					catIdle6XL,
-				},
-				"sleeping": []string{
-					catSleeping0XL,
-					catSleeping1XL,
-					catSleeping2XL,
-				},
-				"attacking": []string{
-					catAttacking0XL,
-					catAttacking1XL,
-					catAttacking2XL,
-					catAttacking3XL,
-					catAttacking4XL,
-					catAttacking5XL,
-					catAttacking6XL,
-					catAttacking7XL,
-					catAttacking8XL,
+				"xl": map[LunaAnimation][]string{
+					"idle": []string{
+						blackcatIdle0XL,
+						blackcatIdle1XL,
+						blackcatIdle2XL,
+						blackcatIdle3XL,
+						blackcatIdle4XL,
+						blackcatIdle5XL,
+						blackcatIdle6XL,
+					},
+					"sleeping": []string{
+						blackcatSleeping0XL,
+						blackcatSleeping1XL,
+						blackcatSleeping2XL,
+					},
+					"attacking": []string{
+						blackcatAttacking0XL,
+						blackcatAttacking1XL,
+						blackcatAttacking2XL,
+						blackcatAttacking3XL,
+						blackcatAttacking4XL,
+						blackcatAttacking5XL,
+						blackcatAttacking6XL,
+						blackcatAttacking7XL,
+						blackcatAttacking8XL,
+					},
 				},
 			},
 		},

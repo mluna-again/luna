@@ -18,6 +18,9 @@ var catSleeping0SM string
 
 # If your sprites are not standard size (32x32) you can specify the size
 $ ./luna/scripts/cut_sprites.sh --size 64x64
+
+# To only cut a specific sheet
+$ ./luna/scripts/cut_sprites.sh --regex black_cat
 EOF
   exit 1
 }
@@ -29,6 +32,11 @@ while [ -n "$1" ]; do
     --size)
       shift
       _SIZE="$1"
+      ;;
+
+    --regex)
+      shift
+      _REGEX="$1"
       ;;
 
     --help|-help|-h|help)
@@ -48,6 +56,10 @@ make_sprites() {
   name="$2"
   size="$3"
   pet="$4"
+
+  if [ -n "$_REGEX" ]; then
+    [[ "$name $pet" =~ $_REGEX ]] || return 0
+  fi
 
   magick "$file" -crop "$size" "tile.png" || return 1
 

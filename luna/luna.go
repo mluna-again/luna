@@ -12,6 +12,7 @@ import (
 type LunaSize string
 type LunaPet string
 type LunaAnimation string
+type LunaVariant string
 
 const (
 	SMALL  LunaSize = "sm"
@@ -30,6 +31,12 @@ const (
 	IDLE      LunaAnimation = "idle"
 	SLEEPING                = "sleeping"
 	ATTACKING               = "attacking"
+)
+
+const (
+	CAT_RAGDOLL     LunaVariant = "ragdoll"
+	CAT_BLACK                   = "black"
+	DEFAULT_VARIANT             = "default"
 )
 
 type animationTickMsg struct{}
@@ -56,6 +63,7 @@ type LunaModel struct {
 	pets                 asciiPets
 	activePet            LunaPet
 	activeAnimation      LunaAnimation
+	activeVariant        LunaVariant
 	activeAnimationCount int
 	activeFrame          int
 	showHelp             bool
@@ -71,6 +79,7 @@ type NewLunaParams struct {
 	Animation LunaAnimation
 	Pet       LunaPet
 	Size      LunaSize
+	Variant   LunaVariant
 	Name      string
 }
 
@@ -91,6 +100,10 @@ func (p NewLunaParams) Validate() (NewLunaParams, []error) {
 		p.Name = "Luna"
 	}
 
+	if p.Variant == "" {
+		p.Variant = getDefaultVariant(p.Pet)
+	}
+
 	errs := []error{}
 
 	if !memberOf[string]([]string{string(IDLE), string(SLEEPING), string(ATTACKING)}, string(p.Animation)) {
@@ -99,6 +112,11 @@ func (p NewLunaParams) Validate() (NewLunaParams, []error) {
 
 	if !memberOf[string]([]string{string(CAT), string(BUNNY), string(TURTLE)}, string(p.Pet)) {
 		errs = append(errs, errors.New("invalid pet"))
+	}
+
+	availableVars := availableVariants(p.Pet)
+	if !memberOf[LunaVariant](availableVars, p.Variant) {
+		errs = append(errs, errors.New("invalid variant for pet"))
 	}
 
 	return p, errs
@@ -118,9 +136,10 @@ func NewLuna(p NewLunaParams) (LunaModel, []error) {
 		name:                 params.Name,
 		activePet:            params.Pet,
 		activeAnimation:      params.Animation,
+		activeVariant:        params.Variant,
 		size:                 params.Size,
 		activeFrame:          0,
-		activeAnimationCount: len(pets[CAT][p.Size][IDLE]),
+		activeAnimationCount: len(pets[params.Pet][params.Variant][params.Size][params.Animation]),
 		showHelp:             false,
 	}, []error{}
 }
@@ -224,13 +243,13 @@ func (l *LunaModel) EnableKeys() {
 func (l *LunaModel) SetPet(name LunaPet) {
 	l.activeFrame = 0
 	l.activePet = name
-	l.activeAnimationCount = len(l.pets[l.activePet][l.size][l.activeAnimation])
+	l.activeAnimationCount = len(l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation])
 }
 
 func (l *LunaModel) SetAnimation(animation LunaAnimation) {
 	l.activeAnimation = animation
 	l.activeFrame = 0
-	l.activeAnimationCount = len(l.pets[l.activePet][l.size][l.activeAnimation])
+	l.activeAnimationCount = len(l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation])
 }
 
 func (l LunaModel) GetAnimation() LunaAnimation {
@@ -239,11 +258,11 @@ func (l LunaModel) GetAnimation() LunaAnimation {
 
 func (l LunaModel) getActivePet() string {
 	// yeah this is definetely not gonna crash
-	return l.pets[l.activePet][l.size][l.activeAnimation][l.activeFrame]
+	return l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation][l.activeFrame]
 }
 
 func (l LunaModel) getActiveFrameCount() int {
-	return len(l.pets[l.activePet][l.size][l.activeAnimation])
+	return len(l.pets[l.activePet][l.activeVariant][l.size][l.activeAnimation])
 }
 
 func (l *LunaModel) SetSize(size LunaSize) {
