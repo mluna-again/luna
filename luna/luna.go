@@ -52,6 +52,7 @@ func (l LunaModel) animationTick() tea.Cmd {
 
 type LunaModel struct {
 	greetings            string
+	name                 string
 	pets                 asciiPets
 	activePet            LunaPet
 	activeAnimation      LunaAnimation
@@ -63,15 +64,17 @@ type LunaModel struct {
 	termW                int
 	keysDisabled         bool
 	size                 LunaSize
+	displayName          bool
 }
 
 type NewLunaParams struct {
 	Animation LunaAnimation
 	Pet       LunaPet
 	Size      LunaSize
+	Name      string
 }
 
-func (p NewLunaParams) Validate() []error {
+func (p NewLunaParams) Validate() (NewLunaParams, []error) {
 	if p.Animation == "" {
 		p.Animation = IDLE
 	}
@@ -84,6 +87,10 @@ func (p NewLunaParams) Validate() []error {
 		p.Size = LARGE
 	}
 
+	if p.Name == "" {
+		p.Name = "Luna"
+	}
+
 	errs := []error{}
 
 	if !memberOf[string]([]string{string(IDLE), string(SLEEPING), string(ATTACKING)}, string(p.Animation)) {
@@ -94,13 +101,13 @@ func (p NewLunaParams) Validate() []error {
 		errs = append(errs, errors.New("invalid pet"))
 	}
 
-	return errs
+	return p, errs
 }
 
 func NewLuna(p NewLunaParams) (LunaModel, []error) {
 	pets := getPets()
 
-	errs := p.Validate()
+	params, errs := p.Validate()
 	if len(errs) > 0 {
 		return LunaModel{}, errs
 	}
@@ -108,12 +115,13 @@ func NewLuna(p NewLunaParams) (LunaModel, []error) {
 	return LunaModel{
 		greetings:            "",
 		pets:                 pets,
-		activePet:            p.Pet,
-		activeAnimation:      p.Animation,
+		name:                 params.Name,
+		activePet:            params.Pet,
+		activeAnimation:      params.Animation,
+		size:                 params.Size,
 		activeFrame:          0,
 		activeAnimationCount: len(pets[CAT][p.Size][IDLE]),
 		showHelp:             false,
-		size:                 p.Size,
 	}, []error{}
 }
 
@@ -175,6 +183,9 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 			l.showHelp = !l.showHelp
 			return l, nil
 
+		case " ":
+			l.displayName = !l.displayName
+
 		case "ctrl+c", "q":
 			return l, tea.Batch(tea.ShowCursor, tea.Quit)
 		}
@@ -189,13 +200,17 @@ func (l LunaModel) View() string {
 	}
 
 	ascii := l.getActivePet()
+	if l.displayName {
+		name := nameStyle.Render(l.name)
+		ascii = lipgloss.JoinVertical(lipgloss.Center, ascii, name)
+	}
 
 	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
 	if !l.showHelp {
 		return ascii
 	}
 
-	return ascii + footer
+	return ascii + "\n" + footer
 }
 
 func (l *LunaModel) DisableKeys() {
@@ -233,4 +248,16 @@ func (l LunaModel) getActiveFrameCount() int {
 
 func (l *LunaModel) SetSize(size LunaSize) {
 	l.size = size
+}
+
+func (l *LunaModel) ShowName() {
+	l.displayName = true
+}
+
+func (l *LunaModel) HideName() {
+	l.displayName = false
+}
+
+func (l *LunaModel) SetName(name string) {
+	l.name = name
 }
