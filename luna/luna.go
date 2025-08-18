@@ -218,6 +218,10 @@ func (l *LunaModel) SetAnimation(animation LunaAnimation) {
 	l.activeAnimationCount = len(l.pets[l.activePet][l.size][l.activeAnimation])
 }
 
+func (l LunaModel) GetAnimation() LunaAnimation {
+	return l.activeAnimation
+}
+
 func (l LunaModel) getActivePet() string {
 	// yeah this is definetely not gonna crash
 	return l.pets[l.activePet][l.size][l.activeAnimation][l.activeFrame]
