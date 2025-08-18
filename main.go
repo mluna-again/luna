@@ -49,11 +49,13 @@ func (m model) View() string {
 var initialAnimation string
 var initialPet string
 var initialVariant string
+var name string
 
 func main() {
 	flag.StringVar(&initialAnimation, "animation", "idle", "initial animation, can be: idle, sleeping, attacking. default: idle")
 	flag.StringVar(&initialPet, "pet", "cat", "initial pet. can be: cat, turtle, bunny. default: cat")
 	flag.StringVar(&initialVariant, "variant", "black", "initial variant (available for: cat). can be: ragdoll, black. default: black.")
+	flag.StringVar(&name, "name", "Luna", "pet's name")
 	flag.Parse()
 
 	params := luna.NewLunaParams{
@@ -61,6 +63,7 @@ func main() {
 		Pet:       luna.LunaPet(initialPet),
 		Size:      luna.LARGE,
 		Variant:   luna.LunaVariant(initialVariant),
+		Name:      name,
 	}
 
 	l, errs := luna.NewLuna(params)
