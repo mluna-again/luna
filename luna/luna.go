@@ -73,6 +73,7 @@ type LunaModel struct {
 	keysDisabled         bool
 	size                 LunaSize
 	displayName          bool
+	autoresize           bool
 }
 
 type NewLunaParams struct {
@@ -154,6 +155,15 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		l.termH = msg.Height
 		l.termW = msg.Width
+		if l.autoresize {
+			if l.termW < 30 || l.termH < 15 {
+				l.SetSize(SMALL)
+			} else if l.termW < 60 || l.termH < 25 {
+				l.SetSize(MEDIUM)
+			} else {
+				l.SetSize(LARGE)
+			}
+		}
 		return l, nil
 
 	case animationTickMsg:
@@ -292,4 +302,8 @@ func (l *LunaModel) HideName() {
 
 func (l *LunaModel) SetName(name string) {
 	l.name = name
+}
+
+func (l *LunaModel) SetAutoresize(value bool) {
+	l.autoresize = value
 }

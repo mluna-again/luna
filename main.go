@@ -25,14 +25,6 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.termH = msg.Height
 		m.termW = msg.Width
-
-		if m.termW < 30 {
-			m.luna.SetSize(luna.SMALL)
-		} else if m.termW < 60 {
-			m.luna.SetSize(luna.MEDIUM)
-		} else {
-			m.luna.SetSize(luna.LARGE)
-		}
 	}
 
 	var cmd tea.Cmd
@@ -67,6 +59,7 @@ func main() {
 	}
 
 	l, errs := luna.NewLuna(params)
+	l.SetAutoresize(true)
 	if len(errs) > 0 {
 		for _, e := range errs {
 			fmt.Println(e.Error())
