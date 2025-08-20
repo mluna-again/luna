@@ -14,6 +14,13 @@ type LunaPet string
 type LunaAnimation string
 type LunaVariant string
 
+type LunaResizePoints struct {
+	heightLarge  int
+	widthLarge   int
+	heightMedium int
+	widthMedium  int
+}
+
 const (
 	SMALL  LunaSize = "sm"
 	MEDIUM          = "md"
@@ -74,17 +81,35 @@ type LunaModel struct {
 	size                 LunaSize
 	displayName          bool
 	autoresize           bool
+	resizePoints         LunaResizePoints
 }
 
 type NewLunaParams struct {
-	Animation LunaAnimation
-	Pet       LunaPet
-	Size      LunaSize
-	Variant   LunaVariant
-	Name      string
+	Animation    LunaAnimation
+	Pet          LunaPet
+	Size         LunaSize
+	Variant      LunaVariant
+	ResizePoints LunaResizePoints
+	Name         string
 }
 
 func (p NewLunaParams) Validate() (NewLunaParams, []error) {
+	if p.ResizePoints.heightLarge == 0 {
+		p.ResizePoints.heightLarge = 25
+	}
+
+	if p.ResizePoints.widthLarge == 0 {
+		p.ResizePoints.widthLarge = 60
+	}
+
+	if p.ResizePoints.heightMedium == 0 {
+		p.ResizePoints.heightMedium = 20
+	}
+
+	if p.ResizePoints.widthMedium == 0 {
+		p.ResizePoints.widthMedium = 30
+	}
+
 	if p.Animation == "" {
 		p.Animation = IDLE
 	}
@@ -143,6 +168,7 @@ func NewLuna(p NewLunaParams) (LunaModel, []error) {
 		activeFrame:          0,
 		activeAnimationCount: len(pets[params.Pet][params.Variant][params.Size][params.Animation]),
 		showHelp:             false,
+		resizePoints:         params.ResizePoints,
 	}, []error{}
 }
 
@@ -156,12 +182,12 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 		l.termH = msg.Height
 		l.termW = msg.Width
 		if l.autoresize {
-			if l.termW < 30 || l.termH < 15 {
-				l.SetSize(SMALL)
-			} else if l.termW < 60 || l.termH < 25 {
+			if l.termW >= l.resizePoints.widthLarge && l.termH >= l.resizePoints.heightLarge {
+				l.SetSize(LARGE)
+			} else if l.termW >= l.resizePoints.widthMedium && l.termH >= l.resizePoints.heightMedium {
 				l.SetSize(MEDIUM)
 			} else {
-				l.SetSize(LARGE)
+				l.SetSize(SMALL)
 			}
 		}
 		return l, nil
