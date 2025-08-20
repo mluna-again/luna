@@ -15,10 +15,10 @@ type LunaAnimation string
 type LunaVariant string
 
 type LunaResizePoints struct {
-	heightLarge  int
-	widthLarge   int
-	heightMedium int
-	widthMedium  int
+	HeightLarge  int
+	WidthLarge   int
+	HeightMedium int
+	WidthMedium  int
 }
 
 const (
@@ -94,20 +94,20 @@ type NewLunaParams struct {
 }
 
 func (p NewLunaParams) Validate() (NewLunaParams, []error) {
-	if p.ResizePoints.heightLarge == 0 {
-		p.ResizePoints.heightLarge = 25
+	if p.ResizePoints.HeightLarge == 0 {
+		p.ResizePoints.HeightLarge = 25
 	}
 
-	if p.ResizePoints.widthLarge == 0 {
-		p.ResizePoints.widthLarge = 60
+	if p.ResizePoints.WidthLarge == 0 {
+		p.ResizePoints.WidthLarge = 60
 	}
 
-	if p.ResizePoints.heightMedium == 0 {
-		p.ResizePoints.heightMedium = 20
+	if p.ResizePoints.HeightMedium == 0 {
+		p.ResizePoints.HeightMedium = 20
 	}
 
-	if p.ResizePoints.widthMedium == 0 {
-		p.ResizePoints.widthMedium = 30
+	if p.ResizePoints.WidthMedium == 0 {
+		p.ResizePoints.WidthMedium = 30
 	}
 
 	if p.Animation == "" {
@@ -182,9 +182,9 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 		l.termH = msg.Height
 		l.termW = msg.Width
 		if l.autoresize {
-			if l.termW >= l.resizePoints.widthLarge && l.termH >= l.resizePoints.heightLarge {
+			if l.termW >= l.resizePoints.WidthLarge && l.termH >= l.resizePoints.HeightLarge {
 				l.SetSize(LARGE)
-			} else if l.termW >= l.resizePoints.widthMedium && l.termH >= l.resizePoints.heightMedium {
+			} else if l.termW >= l.resizePoints.WidthMedium && l.termH >= l.resizePoints.HeightMedium {
 				l.SetSize(MEDIUM)
 			} else {
 				l.SetSize(SMALL)
