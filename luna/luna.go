@@ -265,14 +265,16 @@ func (l LunaModel) View() string {
 		ascii = lipgloss.JoinVertical(lipgloss.Center, ascii, name)
 	}
 
-	footer := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
-	footer = lipgloss.JoinVertical(lipgloss.Center, footer, lipgloss.JoinHorizontal(lipgloss.Center, "> - switch variant"))
-	footer = lipgloss.JoinVertical(lipgloss.Center, footer, lipgloss.JoinHorizontal(lipgloss.Center, "1 - cat  2 - bunny  3 - turtle"))
-	if !l.showHelp {
-		return ascii
+	help := l.help()
+	if l.showHelp {
+		if l.helpFitsScreen() {
+			return ascii + "\n" + help
+		}
+
+		return help
 	}
 
-	return ascii + "\n" + footer
+	return ascii
 }
 
 func (l *LunaModel) DisableKeys() {
@@ -305,6 +307,23 @@ func (l LunaModel) GetAnimation() LunaAnimation {
 	return l.activeAnimation
 }
 
+func (l LunaModel) help() string {
+	help := lipgloss.JoinHorizontal(lipgloss.Center, "i - idle ", "s - sleeping ", "a - attacking")
+	help = lipgloss.JoinVertical(lipgloss.Center, help, lipgloss.JoinHorizontal(lipgloss.Center, "> - switch variant"))
+	help = lipgloss.JoinVertical(lipgloss.Center, help, lipgloss.JoinHorizontal(lipgloss.Center, "1 - cat  2 - bunny  3 - turtle"))
+
+	return help
+}
+
+func (l LunaModel) helpFitsScreen() bool {
+	asciiHeight := lipgloss.Height(l.getActivePet())
+
+	helpHeight := lipgloss.Height(l.help())
+	helpWidth := lipgloss.Width(l.help())
+
+	return asciiHeight+helpHeight <= l.termH-3 && helpWidth <= l.termW-3
+}
+
 func (l LunaModel) getActivePet() string {
 	// yeah this is definetely not gonna crash
 	return l.pets[l.activePet][getSelectedVariant(l.activePet, l.activeVariant)][l.size][l.activeAnimation][l.activeFrame]
@@ -332,4 +351,8 @@ func (l *LunaModel) SetName(name string) {
 
 func (l *LunaModel) SetAutoresize(value bool) {
 	l.autoresize = value
+}
+
+func (l *LunaModel) ToggleHelp() {
+	l.showHelp = !l.showHelp
 }
