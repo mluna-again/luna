@@ -129,7 +129,7 @@ func (p NewLunaParams) Validate() (NewLunaParams, []error) {
 	if p.Variant == "" {
 		p.Variant = getDefaultVariant(p.Pet)
 	}
-	p.Variant = translateVariant(p.Variant)
+	p.Variant = translateVariant(p.Pet, p.Variant)
 
 	errs := []error{}
 

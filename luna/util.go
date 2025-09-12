@@ -16,7 +16,7 @@ func availableVariants(name LunaPet) []LunaVariant {
 		return []LunaVariant{CAT_RAGDOLL, CAT_BLACK}
 
 	default:
-		return []LunaVariant{}
+		return []LunaVariant{DEFAULT_VARIANT}
 	}
 }
 
@@ -33,8 +33,8 @@ func getDefaultVariant(name LunaPet) LunaVariant {
 func getSelectedVariant(name LunaPet, variant LunaVariant) LunaVariant {
 	switch name {
 	case CAT:
-		if variant == "black" {
-			return DEFAULT_VARIANT
+		if variant == "default" {
+			return CAT_BLACK
 		}
 		return variant
 
@@ -43,8 +43,8 @@ func getSelectedVariant(name LunaPet, variant LunaVariant) LunaVariant {
 	}
 }
 
-func translateVariant(name LunaVariant) LunaVariant {
-	if name == "black" {
+func translateVariant(pet LunaPet, name LunaVariant) LunaVariant {
+	if name == "black" && pet == CAT {
 		return CAT_BLACK
 	}
 
