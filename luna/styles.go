@@ -1,6 +1,6 @@
 package luna
 
-import "github.com/charmbracelet/lipgloss"
+import lipgloss "charm.land/lipgloss/v2"
 
 var fg = lipgloss.Color("#ffffff")
 var bg = lipgloss.Color("#000000")

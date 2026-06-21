@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	tea "charm.land/bubbletea/v2"
+	lipgloss "charm.land/lipgloss/v2"
 )
 
 type LunaSize string
@@ -173,7 +173,7 @@ func NewLuna(p NewLunaParams) (LunaModel, []error) {
 }
 
 func (l LunaModel) Init() tea.Cmd {
-	return tea.Batch(tea.HideCursor, l.animationTick())
+	return l.animationTick()
 }
 
 func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
@@ -247,16 +247,16 @@ func (l LunaModel) Update(msg tea.Msg) (LunaModel, tea.Cmd) {
 			l.displayName = !l.displayName
 
 		case "ctrl+c", "q":
-			return l, tea.Batch(tea.ShowCursor, tea.Quit)
+			return l, tea.Quit
 		}
 	}
 
 	return l, nil
 }
 
-func (l LunaModel) View() string {
+func (l LunaModel) View() tea.View {
 	if l.err != nil {
-		return fmt.Sprintf("Oh no: %s", l.err.Error())
+		return tea.NewView(fmt.Sprintf("Oh no: %s", l.err.Error()))
 	}
 
 	ascii := l.getActivePet()
@@ -268,13 +268,16 @@ func (l LunaModel) View() string {
 	help := l.help()
 	if l.showHelp {
 		if l.helpFitsScreen() {
-			return ascii + "\n" + help
+			return tea.NewView(ascii + "\n" + help)
 		}
 
-		return help
+		return tea.NewView(help)
 	}
 
-	return ascii
+	return tea.View{
+		Content: ascii,
+		Cursor:  nil,
+	}
 }
 
 func (l *LunaModel) DisableKeys() {

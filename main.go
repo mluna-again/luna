@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"os"
 
-	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
+	tea "charm.land/bubbletea/v2"
+	lipgloss "charm.land/lipgloss/v2"
 	"github.com/mluna-again/luna/luna"
 )
 
@@ -33,9 +33,12 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, cmd
 }
 
-func (m model) View() string {
-	ascii := lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, m.luna.View())
-	return ascii
+func (m model) View() tea.View {
+	ascii := lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, m.luna.View().Content)
+	return tea.View{
+		Content: ascii,
+		AltScreen: true,
+	}
 }
 
 var initialAnimation string
@@ -69,7 +72,7 @@ func main() {
 	m := model{
 		luna: l,
 	}
-	p := tea.NewProgram(m, tea.WithAltScreen())
+	p := tea.NewProgram(m)
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
