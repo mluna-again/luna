@@ -5,17 +5,23 @@ import (
 	"fmt"
 	"image/color"
 	"os"
+	"strings"
 
 	tea "charm.land/bubbletea/v2"
 	lipgloss "charm.land/lipgloss/v2"
 	"github.com/mluna-again/luna/luna"
 )
 
+var speechBubble = lipgloss.NewStyle().
+	Border(lipgloss.NormalBorder()).
+	Padding(0, 3)
+
 type model struct {
-	luna  luna.LunaModel
-	termH int
-	termW int
-	bg    *color.Color
+	luna    luna.LunaModel
+	termH   int
+	termW   int
+	bg      *color.Color
+	message string
 }
 
 func (m model) Init() tea.Cmd {
@@ -36,11 +42,24 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() tea.View {
-	ascii := lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, m.luna.View().Content)
+	ascii := lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, m.luna.View().Content)
 	var bg color.Color = color.Transparent
 	if m.bg != nil {
 		bg = *m.bg
 	}
+
+	if m.message != "" {
+		msg := lipgloss.Wrap(strings.TrimSpace(m.message), m.termW-4, " ")
+		wrapped := speechBubble.Render(msg)
+		msgW := lipgloss.Width(wrapped)
+		msg = lipgloss.PlaceHorizontal(m.termW, lipgloss.Center, wrapped)
+		caret := lipgloss.PlaceHorizontal(m.termW-msgW+3, lipgloss.Center, "v")
+		msg = lipgloss.JoinVertical(lipgloss.Top, msg, caret)
+		ascii = lipgloss.JoinVertical(lipgloss.Top, msg, ascii)
+	}
+
+	ascii = lipgloss.Place(m.termW, m.termH, lipgloss.Center, lipgloss.Center, ascii)
+
 	return tea.View{
 		Content:         ascii,
 		AltScreen:       true,
@@ -53,6 +72,7 @@ var initialPet string
 var initialVariant string
 var name string
 var fill string
+var msg string
 
 func main() {
 	flag.StringVar(&initialAnimation, "animation", "idle", "initial animation, can be: idle, sleeping, attacking. default: idle")
@@ -60,6 +80,7 @@ func main() {
 	flag.StringVar(&initialVariant, "variant", "default", "initial variant (available for: cat). can be: ragdoll, black. default: black.")
 	flag.StringVar(&name, "name", "Luna", "pet's name")
 	flag.StringVar(&fill, "fill", "", "Fill background")
+	flag.StringVar(&msg, "message", "", "Speech bubble")
 	flag.Parse()
 
 	params := luna.NewLunaParams{
@@ -84,8 +105,9 @@ func main() {
 		c = &col
 	}
 	m := model{
-		luna: l,
-		bg:   c,
+		luna:    l,
+		bg:      c,
+		message: msg,
 	}
 	p := tea.NewProgram(m)
 	if _, err := p.Run(); err != nil {
